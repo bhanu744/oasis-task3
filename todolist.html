@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List Example</title>
+  <style>
+    body{
+      background-color: pink;
+    }
+    .box {
+      background-color:white;
+      padding: 10px;
+      width: 400px;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px whitesmoke;
+      margin: 150px auto;
+      text-align: center;
+    }
+
+    #btn {
+      padding: 10px 15px;
+      background-color: #117a65;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #btn:hover {
+      background-color: #0e6655;
+    }
+
+    #btn:active {
+      transform: scale(0.97);
+    }
+
+    #display {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+   ul {
+      list-style-type:circle;
+    }
+
+   li{
+    color:#006400;
+   } 
+
+
+    .delete-btn {
+     margin-right: 10px; 
+      color: red;
+      cursor: pointer;
+      padding:10px;
+      border:10px;
+      border-radius: 5px;
+      position: relative;
+      gap:40px;
+
+    }
+      .complete-btn {
+      
+      color: green;
+      cursor: pointer;
+      padding:10px;
+      border:10px;
+      border-radius: 5px;
+      position: relative;
+      gap:40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>To-Do List 📋</h1><br><br>
+    <input id="display" placeholder="Enter task here..." />
+    <button id="btn">Add Task</button>
+    <h2>Pending List</h2>
+    <ul id="pending-list"></ul>
+    <br>
+    <h2>Completed List</h2>
+    <ul id="completed-list"><br></ul>
+  </div>
+
+ <script>
+  const button = document.getElementById("btn");
+  const input = document.getElementById("display");
+  const pendingList = document.getElementById("pending-list");
+  const completedList = document.getElementById("completed-list");
+
+  button.addEventListener("click", () => {
+    const task = input.value.trim();
+    if (task === "") {
+      alert("Please enter a task");
+      return;
+    }
+
+    const listItem = document.createElement("li");
+    const taskSpan = document.createElement("span");
+    taskSpan.textContent = task;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-btn";
+    deleteButton.addEventListener("click", () => {
+      listItem.remove();
+    });
+
+    const completeButton = document.createElement("button");
+    completeButton.textContent = "Complete";
+    completeButton.className = "complete-btn";
+    completeButton.addEventListener("click", () => {
+      // Move to completed list
+      const completedItem = document.createElement("li");
+      completedItem.textContent = task;
+      completedList.appendChild(completedItem);
+      listItem.remove();
+    });
+
+    listItem.appendChild(taskSpan);
+    listItem.appendChild(deleteButton);
+    listItem.appendChild(completeButton);
+    pendingList.appendChild(listItem);
+
+    input.value = "";
+  });
+</script>
+
+</body>
+</html>
